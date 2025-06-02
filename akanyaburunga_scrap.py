@@ -19,105 +19,197 @@ def save_progress(articles):
 
 def get_next_page_url(soup):
     """Get the next page URL if it exists"""
-    next_link = soup.find('a', class_='next')
+    next_link = soup.find('a', class_='next page-numbers')
     return next_link.get('href') if next_link else None
 
-def scrape_akanyaburunga(start_url):
-    """Scrape articles from Akanyaburunga blog with pagination"""
+def scrape_article(url, headers):
+    """Scrape a single article page"""
     try:
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()
+        soup = BeautifulSoup(response.content, 'html.parser')
+        
+        # Find article content
+        article = soup.find('article') or soup.find('div', class_='post')
+        if not article:
+            print(f"No article found at {url}")
+            return None
+            
+        # Get title
+        title = article.find('h1', class_='entry-title') or article.find('h2', class_='entry-title')
+        title_text = title.text.strip() if title else "No title"
+        print(f"Found title: {title_text}")
+        
+        # Get date
+        date = article.find('time', class_='entry-date published') or article.find('span', class_='posted-on')
+        date_text = date.text.strip() if date else "No date"
+        
+        # Get content
+        content = article.find('div', class_='entry-content') or article.find('div', class_='entry-summary')
+        paragraphs = []
+        if content:
+            for p in content.find_all('p'):
+                text = p.text.strip()
+                if text:
+                    paragraphs.append(text)
+        
+        # Get categories
+        categories = []
+        category_links = article.find_all('a', rel='category tag')
+        for cat in category_links:
+            categories.append({
+                'name': cat.text.strip(),
+                'url': cat.get('href', '')
+            })
+            print(f"Found category: {categories[-1]['name']}")
+            
+        return {
+            'title': title_text,
+            'date': date_text,
+            'content': paragraphs,
+            'categories': categories,
+            'url': url
         }
-        
-        # Load existing progress
-        articles = load_progress()
-        existing_titles = {article['title'] for article in articles}
-        
-        current_url = start_url
-        page_num = 1
-        
-        while current_url:
-            print(f"\nProcessing page {page_num}: {current_url}")
+    except Exception as e:
+        print(f"Error scraping article {url}: {e}")
+        return None
+
+def scrape_category(category_url, headers):
+    """Scrape all articles from a category"""
+    articles = []
+    current_url = category_url
+    
+    while current_url:
+        print(f"\nProcessing category page: {current_url}")
+        try:
             response = requests.get(current_url, headers=headers)
             response.raise_for_status()
-            
             soup = BeautifulSoup(response.content, 'html.parser')
             
-            # Find all post divs
-            all_posts = soup.find_all('div', class_='post')
-            print(f"Found {len(all_posts)} posts on this page")
+            # Debug the HTML structure
+            print("Debug: HTML structure of first post")
+            first_post = soup.find('div', class_='post') or soup.find('article')
+            if first_post:
+                print(first_post.prettify()[:500])  # Print first 500 chars
             
-            for post in all_posts:
-                # Get title
-                title = post.find('h2').find('a')
-                title_text = title.text.strip() if title else "No title"
-                
-                # Skip if already scraped
-                if title_text in existing_titles:
-                    print(f"Skipping already scraped article: {title_text}")
+            # Find all posts
+            posts = soup.find_all('div', id=lambda x: x and x.startswith('post-'))
+            print(f"Found {len(posts)} posts on this page")
+            
+            for post in posts:
+                try:
+                    # Get article URL from title link
+                    title_link = post.find('a', href=True)
+                    if not title_link:
+                        continue
+                        
+                    article_url = title_link['href']
+                    print(f"\nScraping article: {article_url}")
+                    
+                    # Get the full article
+                    article_response = requests.get(article_url, headers=headers)
+                    article_response.raise_for_status()
+                    article_soup = BeautifulSoup(article_response.content, 'html.parser')
+                    
+                    # Get title
+                    title = article_soup.find('h1', class_='entry-title')
+                    title_text = title.text.strip() if title else "No title"
+                    
+                    # Get date
+                    date = article_soup.find('time', class_='entry-date published')
+                    date_text = date.text.strip() if date else "No date"
+                    
+                    # Get content
+                    content = article_soup.find('div', class_='entry-content')
+                    paragraphs = []
+                    if content:
+                        for p in content.find_all('p'):
+                            text = p.text.strip()
+                            if text:
+                                paragraphs.append(text)
+                    
+                    # Get categories
+                    categories = []
+                    for cat_link in article_soup.find_all('a', rel='category tag'):
+                        categories.append({
+                            'name': cat_link.text.strip(),
+                            'url': cat_link['href']
+                        })
+                    
+                    article_data = {
+                        'title': title_text,
+                        'date': date_text,
+                        'content': paragraphs,
+                        'categories': categories,
+                        'url': article_url
+                    }
+                    
+                    articles.append(article_data)
+                    print(f"Successfully scraped: {title_text}")
+                    
+                    # Save progress after each article
+                    save_progress(articles)
+                    time.sleep(1)  # Be polite
+                    
+                except Exception as e:
+                    print(f"Error scraping article {article_url}: {e}")
                     continue
-                
-                print(f"Processing article: {title_text}")
-                
-                # Get date
-                date = post.find('p', class_='entry-meta').find('a')
-                date_text = date.text.strip() if date else "No date"
-                
-                # Get content
-                content = post.find('div', class_='entry-summary')
-                paragraphs = []
-                if content:
-                    for p in content.find_all('p'):
-                        text = p.text.strip()
-                        if text:
-                            paragraphs.append(text)
-                
-                # Get categories - Updated implementation
-                categories = post.find_all('a', rel='category tag')
-                category_data = []
-                if categories:
-                    for cat in categories:
-                        category_info = {
-                            'name': cat.text.strip(),
-                            'url': cat.get('href', ''),
-                        }
-                        category_data.append(category_info)
-                
-                # Create article data with categories
-                article_data = {
-                    'title': title_text,
-                    'date': date_text,
-                    'content': paragraphs,
-                    'categories': category_data,  # Array of category objects
-                    'page_number': page_num,
-                    'page_url': current_url
-                }
-                
-                articles.append(article_data)
-                existing_titles.add(title_text)
-                
-                # Debug print
-                print(f"Categories found for '{title_text}': {category_data}")
-                
-                # Save progress after each article
-                save_progress(articles)
             
-            # Get next page URL
-            current_url = get_next_page_url(soup)
-            page_num += 1
+            # Get next page
+            next_link = soup.find('a', class_='next page-numbers')
+            current_url = next_link['href'] if next_link else None
+            if current_url:
+                print(f"\nFound next page: {current_url}")
+                time.sleep(2)  # Be polite between pages
             
-            # Add delay between pages to be polite
-            time.sleep(2)
-            
-        print("\nScraping completed!")
-        return articles
+        except Exception as e:
+            print(f"Error processing category page {current_url}: {e}")
+            break
+    
+    return articles
+
+def main():
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+    }
+    
+    # List of all category URLs
+    categories = [
+        'https://akanyaburunga.wordpress.com/category/amadini/',
+        'https://akanyaburunga.wordpress.com/category/amayagwa/',
+        'https://akanyaburunga.wordpress.com/category/imibano/',
+        'https://akanyaburunga.wordpress.com/category/imigani-ibitito/',
+        'https://akanyaburunga.wordpress.com/category/imyibutsa/',
+        'https://akanyaburunga.wordpress.com/category/indimburo/',
+        'https://akanyaburunga.wordpress.com/category/inkuru-zigezweho/',
+        'https://akanyaburunga.wordpress.com/category/kahise/',
+        'https://akanyaburunga.wordpress.com/category/menya-akahise-kawe/',
+        'https://akanyaburunga.wordpress.com/category/uncategorized/',
+        'https://akanyaburunga.wordpress.com/category/utugenegene/',
+        'https://akanyaburunga.wordpress.com/category/yaga-akaranga/'
+    ]
+    
+    all_articles = []
+    existing_urls = set()
+    
+    # Load existing progress
+    if os.path.exists('Articles.json'):
+        all_articles = load_progress()
+        existing_urls = {article['url'] for article in all_articles}
+    
+    # Scrape each category
+    for category_url in categories:
+        print(f"\nProcessing category: {category_url}")
+        category_articles = scrape_category(category_url, headers)
         
-    except requests.RequestException as e:
-        print(f"\nError on page {page_num}: {e}")
-        print(f"Last URL processed: {current_url}")
-        return articles
+        # Add only new articles
+        for article in category_articles:
+            if article['url'] not in existing_urls:
+                all_articles.append(article)
+                existing_urls.add(article['url'])
+                save_progress(all_articles)
+    
+    print(f"\nTotal articles scraped: {len(all_articles)}")
 
 if __name__ == "__main__":
-    url = "https://akanyaburunga.wordpress.com/"
-    results = scrape_akanyaburunga(url)
-    print(f"\nTotal articles scraped: {len(results)}")
+    main()
