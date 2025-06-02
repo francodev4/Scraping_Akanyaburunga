@@ -168,6 +168,39 @@ def scrape_category(category_url, headers):
     
     return articles
 
+def save_structured_articles(all_articles):
+    """Save articles structured by categories"""
+    # Create dictionary to hold articles by category
+    categories_dict = {}
+    
+    # Group articles by category
+    for article in all_articles:
+        for category in article['categories']:
+            category_name = category['name']
+            category_url = category['url']
+            
+            if category_name not in categories_dict:
+                categories_dict[category_name] = {
+                    'Articles': {},
+                    'url_of_category': category_url
+                }
+            
+            # Find next article number
+            article_num = len(categories_dict[category_name]['Articles']) + 1
+            article_key = f'Article{article_num}'
+            
+            # Add article with simplified structure
+            categories_dict[category_name]['Articles'][article_key] = {
+                'title': article['title'],
+                'date': article['date'],
+                'content': article['content']
+            }
+    
+    # Save to JSON with the new structure
+    with open('Articles.json', 'w', encoding='utf-8') as f:
+        json.dump(categories_dict, f, ensure_ascii=False, indent=4)
+    print("Saved articles to Articles.json")
+
 def main():
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
@@ -210,6 +243,9 @@ def main():
                 save_progress(all_articles)
     
     print(f"\nTotal articles scraped: {len(all_articles)}")
+    
+    # After scraping is complete, save structured version
+    save_structured_articles(all_articles)
 
 if __name__ == "__main__":
     main()
