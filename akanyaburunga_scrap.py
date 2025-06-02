@@ -30,38 +30,42 @@ def scrape_article(url, headers):
         soup = BeautifulSoup(response.content, 'html.parser')
         
         # Find article content
-        article = soup.find('article') or soup.find('div', class_='post')
+        article = soup.find('div', class_='post')
         if not article:
             print(f"No article found at {url}")
             return None
             
-        # Get title
-        title = article.find('h1', class_='entry-title') or article.find('h2', class_='entry-title')
+        # Get title from h2 > a
+        title = article.find('h2').find('a')
         title_text = title.text.strip() if title else "No title"
         print(f"Found title: {title_text}")
         
-        # Get date
-        date = article.find('time', class_='entry-date published') or article.find('span', class_='posted-on')
+        # Get date from first link in entry-meta
+        meta = article.find('p', class_='entry-meta')
+        date = meta.find('a') if meta else None
         date_text = date.text.strip() if date else "No date"
         
-        # Get content
-        content = article.find('div', class_='entry-content') or article.find('div', class_='entry-summary')
+        # Get content from p tags with style="text-align:justify"
+        content = article.find('div', class_='entry-summary')
         paragraphs = []
         if content:
-            for p in content.find_all('p'):
+            for p in content.find_all('p', style="text-align:justify"):
                 text = p.text.strip()
                 if text:
                     paragraphs.append(text)
         
-        # Get categories
+        # Get categories from the div class names
         categories = []
-        category_links = article.find_all('a', rel='category tag')
-        for cat in category_links:
-            categories.append({
-                'name': cat.text.strip(),
-                'url': cat.get('href', '')
-            })
-            print(f"Found category: {categories[-1]['name']}")
+        class_list = article.get('class', [])
+        for class_name in class_list:
+            if class_name.startswith('category-'):
+                cat_name = class_name.replace('category-', '')
+                cat_url = f"https://akanyaburunga.wordpress.com/category/{cat_name}/"
+                categories.append({
+                    'name': cat_name,
+                    'url': cat_url
+                })
+                print(f"Found category: {cat_name}")
             
         return {
             'title': title_text,
@@ -200,6 +204,52 @@ def save_structured_articles(all_articles):
     with open('Articles.json', 'w', encoding='utf-8') as f:
         json.dump(categories_dict, f, ensure_ascii=False, indent=4)
     print("Saved articles to Articles.json")
+
+def scrape_mada_actus():
+    articles = []
+    url = "https://actus.mg/"
+    
+    try:
+        response = requests.get(url)
+        soup = BeautifulSoup(response.text, 'html.parser')
+        
+        for article in soup.find_all('article'):
+            # Get title
+            title = article.find('h2', class_='entry-title')
+            title_text = title.text.strip() if title else "No title"
+            
+            # Get date
+            date = article.find('time', class_='entry-date')
+            date_text = date.text.strip() if date else "No date"
+            
+            # Get "More..." link
+            more_link = article.find('a', class_='more-link')
+            if more_link:
+                article_url = more_link['href']
+                article_response = requests.get(article_url)
+                article_soup = BeautifulSoup(article_response.text, 'html.parser')
+                
+                # Get content
+                content = article_soup.find('div', class_='entry-content')
+                content_text = ""
+                if content:
+                    # Exclure les boutons de partage social
+                    social_buttons = content.find_all('div', class_='sharedaddy')
+                    for button in social_buttons:
+                        button.decompose()
+                    
+                    content_text = content.get_text(strip=True)
+                
+                articles.append({
+                    'title': title_text,
+                    'date': date_text,
+                    'content': content_text
+                })
+    
+    except Exception as e:
+        print(f"Une erreur s'est produite : {str(e)}")
+    
+    return articles
 
 def main():
     headers = {
