@@ -1,6 +1,3 @@
-# Web Scraping Examples in Python
-
-# Method 1: Using requests and BeautifulSoup (Most Common)
 import requests
 from bs4 import BeautifulSoup
 import json
@@ -75,16 +72,32 @@ def scrape_akanyaburunga(start_url):
                         if text:
                             paragraphs.append(text)
                 
+                # Get categories - Updated implementation
+                categories = post.find_all('a', rel='category tag')
+                category_data = []
+                if categories:
+                    for cat in categories:
+                        category_info = {
+                            'name': cat.text.strip(),
+                            'url': cat.get('href', ''),
+                        }
+                        category_data.append(category_info)
+                
+                # Create article data with categories
                 article_data = {
                     'title': title_text,
                     'date': date_text,
                     'content': paragraphs,
+                    'categories': category_data,  # Array of category objects
                     'page_number': page_num,
-                    'url': current_url
+                    'page_url': current_url
                 }
                 
                 articles.append(article_data)
                 existing_titles.add(title_text)
+                
+                # Debug print
+                print(f"Categories found for '{title_text}': {category_data}")
                 
                 # Save progress after each article
                 save_progress(articles)
