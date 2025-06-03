@@ -34,7 +34,7 @@ def scrape_article(url, headers):
         if not article:
             print(f"No article found at {url}")
             return None
-            
+        
         # Get title from h2 > a
         title = article.find('h2').find('a')
         title_text = title.text.strip() if title else "No title"
@@ -44,43 +44,46 @@ def scrape_article(url, headers):
         date = meta.find('a') if meta else None
         date_text = date.text.strip() if date else "No date"
         
-        # Get initial content from preview
+        # Get content from entry-summary first
         paragraphs = []
-        preview = article.find('div', class_='entry-summary')
-        if preview:
-            # Get text from paragraphs with strong tags or has-text-align-left class
-            for p in preview.find_all(['p'], class_='has-text-align-left'):
+        entry_summary = article.find('div', class_='entry-summary')
+        if entry_summary:
+            # Look for paragraphs with class="has-text-align-left" and strong tags
+            for p in entry_summary.find_all('p', class_='has-text-align-left'):
                 strong = p.find('strong')
                 if strong:
                     text = strong.text.strip()
                     if text and not text.startswith(('Share this:', 'Like Loading')):
                         paragraphs.append(text)
         
-        # Get full article content from more link
-        more_link = article.find('a', class_='more-link')
-        if more_link and not paragraphs:  # Only if we don't have content yet
-            content_url = more_link['href']
-            content_response = requests.get(content_url, headers=headers)
-            content_soup = BeautifulSoup(content_response.content, 'html.parser')
-            
-            content_div = content_soup.find('div', class_='entry-content')
-            if content_div:
-                # Remove social sharing buttons
-                for share in content_div.find_all('div', class_='sharedaddy'):
-                    share.decompose()
+        # If we don't have content yet, try getting from full article
+        if not paragraphs:
+            more_link = article.find('a', class_='more-link')
+            if more_link:
+                full_url = more_link['href']
+                full_response = requests.get(full_url, headers=headers)
+                full_soup = BeautifulSoup(full_response.content, 'html.parser')
                 
-                # Get paragraphs with text
-                for p in content_div.find_all('p', {'style': ['text-align:justify', 'text-align: justify']}):
-                    text = p.text.strip()
-                    if text and not text.startswith(('Share this:', 'Like Loading')):
-                        paragraphs.append(text)
+                content = full_soup.find('div', class_='entry-content')
+                if content:
+                    # Remove social sharing buttons
+                    for share in content.find_all('div', class_='sharedaddy'):
+                        share.decompose()
+                    
+                    # Get paragraphs with text-align:justify
+                    for p in content.find_all('p', style='text-align:justify'):
+                        text = p.text.strip()
+                        if text and not text.startswith(('Share this:', 'Like Loading')):
+                            paragraphs.append(text)
+        
+        print(f"Found {len(paragraphs)} paragraphs for {title_text}")
         
         return {
             'title': title_text,
             'date': date_text,
             'content': paragraphs
         }
-        
+    
     except Exception as e:
         print(f"Error scraping article {url}: {e}")
         return None
@@ -305,3 +308,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
