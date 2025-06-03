@@ -44,44 +44,25 @@ def scrape_article(url, headers):
         date = meta.find('a') if meta else None
         date_text = date.text.strip() if date else "No date"
         
-        # Get content from entry-summary first
-        paragraphs = []
+        # Get content from entry-summary
+        content = []
         entry_summary = article.find('div', class_='entry-summary')
         if entry_summary:
-            # Look for paragraphs with class="has-text-align-left" and strong tags
-            for p in entry_summary.find_all('p', class_='has-text-align-left'):
-                strong = p.find('strong')
-                if strong:
-                    text = strong.text.strip()
-                    if text and not text.startswith(('Share this:', 'Like Loading')):
-                        paragraphs.append(text)
+            # Look specifically for paragraph with has-text-align-left class and strong tag
+            preview_p = entry_summary.find('p', class_='has-text-align-left')
+            if preview_p:
+                strong_text = preview_p.find('strong')
+                if strong_text:
+                    text = strong_text.text.strip()
+                    if text:
+                        content.append(text)
         
-        # If we don't have content yet, try getting from full article
-        if not paragraphs:
-            more_link = article.find('a', class_='more-link')
-            if more_link:
-                full_url = more_link['href']
-                full_response = requests.get(full_url, headers=headers)
-                full_soup = BeautifulSoup(full_response.content, 'html.parser')
-                
-                content = full_soup.find('div', class_='entry-content')
-                if content:
-                    # Remove social sharing buttons
-                    for share in content.find_all('div', class_='sharedaddy'):
-                        share.decompose()
-                    
-                    # Get paragraphs with text-align:justify
-                    for p in content.find_all('p', style='text-align:justify'):
-                        text = p.text.strip()
-                        if text and not text.startswith(('Share this:', 'Like Loading')):
-                            paragraphs.append(text)
-        
-        print(f"Found {len(paragraphs)} paragraphs for {title_text}")
+        print(f"Found content for {title_text}: {content[0] if content else 'No content'}")
         
         return {
             'title': title_text,
             'date': date_text,
-            'content': paragraphs
+            'content': content
         }
     
     except Exception as e:
