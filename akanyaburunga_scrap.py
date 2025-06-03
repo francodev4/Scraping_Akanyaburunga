@@ -38,42 +38,49 @@ def scrape_article(url, headers):
         # Get title from h2 > a
         title = article.find('h2').find('a')
         title_text = title.text.strip() if title else "No title"
-        print(f"Found title: {title_text}")
         
         # Get date from first link in entry-meta
         meta = article.find('p', class_='entry-meta')
         date = meta.find('a') if meta else None
         date_text = date.text.strip() if date else "No date"
         
-        # Get content from p tags with style="text-align:justify"
-        content = article.find('div', class_='entry-summary')
+        # Get initial content from preview
         paragraphs = []
-        if content:
-            for p in content.find_all('p', style="text-align:justify"):
-                text = p.text.strip()
-                if text:
-                    paragraphs.append(text)
+        preview = article.find('div', class_='entry-summary')
+        if preview:
+            # Get text from paragraphs with strong tags or has-text-align-left class
+            for p in preview.find_all(['p'], class_='has-text-align-left'):
+                strong = p.find('strong')
+                if strong:
+                    text = strong.text.strip()
+                    if text and not text.startswith(('Share this:', 'Like Loading')):
+                        paragraphs.append(text)
         
-        # Get categories from the div class names
-        categories = []
-        class_list = article.get('class', [])
-        for class_name in class_list:
-            if class_name.startswith('category-'):
-                cat_name = class_name.replace('category-', '')
-                cat_url = f"https://akanyaburunga.wordpress.com/category/{cat_name}/"
-                categories.append({
-                    'name': cat_name,
-                    'url': cat_url
-                })
-                print(f"Found category: {cat_name}")
+        # Get full article content from more link
+        more_link = article.find('a', class_='more-link')
+        if more_link and not paragraphs:  # Only if we don't have content yet
+            content_url = more_link['href']
+            content_response = requests.get(content_url, headers=headers)
+            content_soup = BeautifulSoup(content_response.content, 'html.parser')
             
+            content_div = content_soup.find('div', class_='entry-content')
+            if content_div:
+                # Remove social sharing buttons
+                for share in content_div.find_all('div', class_='sharedaddy'):
+                    share.decompose()
+                
+                # Get paragraphs with text
+                for p in content_div.find_all('p', {'style': ['text-align:justify', 'text-align: justify']}):
+                    text = p.text.strip()
+                    if text and not text.startswith(('Share this:', 'Like Loading')):
+                        paragraphs.append(text)
+        
         return {
             'title': title_text,
             'date': date_text,
-            'content': paragraphs,
-            'categories': categories,
-            'url': url
+            'content': paragraphs
         }
+        
     except Exception as e:
         print(f"Error scraping article {url}: {e}")
         return None
@@ -90,44 +97,43 @@ def scrape_category(category_url, headers):
             response.raise_for_status()
             soup = BeautifulSoup(response.content, 'html.parser')
             
-            # Debug the HTML structure
-            print("Debug: HTML structure of first post")
-            first_post = soup.find('div', class_='post') or soup.find('article')
-            if first_post:
-                print(first_post.prettify()[:500])  # Print first 500 chars
-            
             # Find all posts
-            posts = soup.find_all('div', id=lambda x: x and x.startswith('post-'))
+            posts = soup.find_all('div', class_='post')
             print(f"Found {len(posts)} posts on this page")
             
             for post in posts:
                 try:
-                    # Get article URL from title link
-                    title_link = post.find('a', href=True)
-                    if not title_link:
+                    # Get title from h2 > a
+                    title_elem = post.find('h2').find('a')
+                    if not title_elem:
                         continue
-                        
-                    article_url = title_link['href']
-                    print(f"\nScraping article: {article_url}")
+                    title_text = title_elem.text.strip()
+                    article_url = title_elem['href']
                     
-                    # Get the full article
+                    # Get date from first link in entry-meta
+                    meta = post.find('p', class_='entry-meta')
+                    date = meta.find('a') if meta else None
+                    date_text = date.text.strip() if date else "No date"
+                    
+                    print(f"\nScraping article: {article_url}")
+                    print(f"Title: {title_text}")
+                    print(f"Date: {date_text}")
+                    
+                    # Get full article content
                     article_response = requests.get(article_url, headers=headers)
                     article_response.raise_for_status()
                     article_soup = BeautifulSoup(article_response.content, 'html.parser')
-                    
-                    # Get title
-                    title = article_soup.find('h1', class_='entry-title')
-                    title_text = title.text.strip() if title else "No title"
-                    
-                    # Get date
-                    date = article_soup.find('time', class_='entry-date published')
-                    date_text = date.text.strip() if date else "No date"
                     
                     # Get content
                     content = article_soup.find('div', class_='entry-content')
                     paragraphs = []
                     if content:
-                        for p in content.find_all('p'):
+                        # Remove social sharing buttons
+                        for share in content.find_all('div', class_='sharedaddy'):
+                            share.decompose()
+                        
+                        # Get paragraphs with justified text
+                        for p in content.find_all('p', style="text-align:justify"):
                             text = p.text.strip()
                             if text:
                                 paragraphs.append(text)
@@ -158,13 +164,13 @@ def scrape_category(category_url, headers):
                 except Exception as e:
                     print(f"Error scraping article {article_url}: {e}")
                     continue
-            
+                    
             # Get next page
             next_link = soup.find('a', class_='next page-numbers')
             current_url = next_link['href'] if next_link else None
             if current_url:
                 print(f"\nFound next page: {current_url}")
-                time.sleep(2)  # Be polite between pages
+                time.sleep(2)
             
         except Exception as e:
             print(f"Error processing category page {current_url}: {e}")
