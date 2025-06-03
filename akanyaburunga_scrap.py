@@ -4,70 +4,29 @@ import json
 import time
 import os
 
-def load_progress():
-    """Load previously scraped articles if any"""
-    if os.path.exists('Articles.json'):
-        with open('Articles.json', 'r', encoding='utf-8') as f:
-            return json.load(f)
-    return []
-
-def save_progress(articles):
-    """Save current progress"""
-    with open('Articles.json', 'w', encoding='utf-8') as f:
-        json.dump(articles, f, ensure_ascii=False, indent=4)
-    print(f"Progress saved: {len(articles)} articles")
-
-def get_next_page_url(soup):
-    """Get the next page URL if it exists"""
-    next_link = soup.find('a', class_='next page-numbers')
-    return next_link.get('href') if next_link else None
-
-def scrape_article(url, headers):
-    """Scrape a single article page"""
+def get_article_content(url, headers):
+    """Get the full content of an article"""
     try:
         response = requests.get(url, headers=headers)
         response.raise_for_status()
         soup = BeautifulSoup(response.content, 'html.parser')
         
-        # Find article content
-        article = soup.find('div', class_='post')
-        if not article:
-            print(f"No article found at {url}")
-            return None
+        # Find the article content
+        content_div = soup.find('div', class_='entry-content')
+        if not content_div:
+            return ""
         
-        # Get title from h2 > a
-        title = article.find('h2').find('a')
-        title_text = title.text.strip() if title else "No title"
+        # Get all paragraphs
+        paragraphs = []
+        for p in content_div.find_all('p'):
+            text = p.text.strip()
+            if text:
+                paragraphs.append(text)
         
-        # Get date from first link in entry-meta
-        meta = article.find('p', class_='entry-meta')
-        date = meta.find('a') if meta else None
-        date_text = date.text.strip() if date else "No date"
-        
-        # Get content from entry-summary
-        content = []
-        entry_summary = article.find('div', class_='entry-summary')
-        if entry_summary:
-            # Look specifically for paragraph with has-text-align-left class and strong tag
-            preview_p = entry_summary.find('p', class_='has-text-align-left')
-            if preview_p:
-                strong_text = preview_p.find('strong')
-                if strong_text:
-                    text = strong_text.text.strip()
-                    if text:
-                        content.append(text)
-        
-        print(f"Found content for {title_text}: {content[0] if content else 'No content'}")
-        
-        return {
-            'title': title_text,
-            'date': date_text,
-            'content': content
-        }
-    
+        return "\n".join(paragraphs)
     except Exception as e:
-        print(f"Error scraping article {url}: {e}")
-        return None
+        print(f"Error getting article content from {url}: {e}")
+        return ""
 
 def scrape_category(category_url, headers):
     """Scrape all articles from a category"""
@@ -87,68 +46,41 @@ def scrape_category(category_url, headers):
             
             for post in posts:
                 try:
-                    # Get title from h2 > a
+                    # Get title and URL
                     title_elem = post.find('h2').find('a')
                     if not title_elem:
                         continue
-                    title_text = title_elem.text.strip()
+                    
+                    title = title_elem.text.strip()
                     article_url = title_elem['href']
                     
-                    # Get date from first link in entry-meta
+                    # Get date
                     meta = post.find('p', class_='entry-meta')
                     date = meta.find('a') if meta else None
                     date_text = date.text.strip() if date else "No date"
                     
-                    print(f"\nScraping article: {article_url}")
-                    print(f"Title: {title_text}")
-                    print(f"Date: {date_text}")
+                    print(f"\nScraping article: {title}")
                     
                     # Get full article content
-                    article_response = requests.get(article_url, headers=headers)
-                    article_response.raise_for_status()
-                    article_soup = BeautifulSoup(article_response.content, 'html.parser')
-                    
-                    # Get content
-                    content = article_soup.find('div', class_='entry-content')
-                    paragraphs = []
-                    if content:
-                        # Remove social sharing buttons
-                        for share in content.find_all('div', class_='sharedaddy'):
-                            share.decompose()
-                        
-                        # Get paragraphs with justified text
-                        for p in content.find_all('p', style="text-align:justify"):
-                            text = p.text.strip()
-                            if text:
-                                paragraphs.append(text)
-                    
-                    # Get categories
-                    categories = []
-                    for cat_link in article_soup.find_all('a', rel='category tag'):
-                        categories.append({
-                            'name': cat_link.text.strip(),
-                            'url': cat_link['href']
-                        })
+                    content = get_article_content(article_url, headers)
                     
                     article_data = {
-                        'title': title_text,
+                        'title': title,
                         'date': date_text,
-                        'content': paragraphs,
-                        'categories': categories,
+                        'content': content,
                         'url': article_url
                     }
                     
                     articles.append(article_data)
-                    print(f"Successfully scraped: {title_text}")
+                    print(f"Successfully scraped: {title}")
                     
-                    # Save progress after each article
-                    save_progress(articles)
-                    time.sleep(1)  # Be polite
+                    # Be polite to the server
+                    time.sleep(1)
                     
                 except Exception as e:
                     print(f"Error scraping article {article_url}: {e}")
                     continue
-                    
+            
             # Get next page
             next_link = soup.find('a', class_='next page-numbers')
             current_url = next_link['href'] if next_link else None
@@ -162,84 +94,11 @@ def scrape_category(category_url, headers):
     
     return articles
 
-def save_structured_articles(all_articles):
-    """Save articles structured by categories"""
-    # Create dictionary to hold articles by category
-    categories_dict = {}
-    
-    # Group articles by category
-    for article in all_articles:
-        for category in article['categories']:
-            category_name = category['name']
-            category_url = category['url']
-            
-            if category_name not in categories_dict:
-                categories_dict[category_name] = {
-                    'Articles': {},
-                    'url_of_category': category_url
-                }
-            
-            # Find next article number
-            article_num = len(categories_dict[category_name]['Articles']) + 1
-            article_key = f'Article{article_num}'
-            
-            # Add article with simplified structure
-            categories_dict[category_name]['Articles'][article_key] = {
-                'title': article['title'],
-                'date': article['date'],
-                'content': article['content']
-            }
-    
-    # Save to JSON with the new structure
-    with open('Articles.json', 'w', encoding='utf-8') as f:
-        json.dump(categories_dict, f, ensure_ascii=False, indent=4)
-    print("Saved articles to Articles.json")
-
-def scrape_mada_actus():
-    articles = []
-    url = "https://actus.mg/"
-    
-    try:
-        response = requests.get(url)
-        soup = BeautifulSoup(response.text, 'html.parser')
-        
-        for article in soup.find_all('article'):
-            # Get title
-            title = article.find('h2', class_='entry-title')
-            title_text = title.text.strip() if title else "No title"
-            
-            # Get date
-            date = article.find('time', class_='entry-date')
-            date_text = date.text.strip() if date else "No date"
-            
-            # Get "More..." link
-            more_link = article.find('a', class_='more-link')
-            if more_link:
-                article_url = more_link['href']
-                article_response = requests.get(article_url)
-                article_soup = BeautifulSoup(article_response.text, 'html.parser')
-                
-                # Get content
-                content = article_soup.find('div', class_='entry-content')
-                content_text = ""
-                if content:
-                    # Exclure les boutons de partage social
-                    social_buttons = content.find_all('div', class_='sharedaddy')
-                    for button in social_buttons:
-                        button.decompose()
-                    
-                    content_text = content.get_text(strip=True)
-                
-                articles.append({
-                    'title': title_text,
-                    'date': date_text,
-                    'content': content_text
-                })
-    
-    except Exception as e:
-        print(f"Une erreur s'est produite : {str(e)}")
-    
-    return articles
+def save_articles(categories_data):
+    """Save articles to JSON file"""
+    with open('akanyaburunga_articles.json', 'w', encoding='utf-8') as f:
+        json.dump(categories_data, f, ensure_ascii=False, indent=4)
+    print(f"Saved all articles to akanyaburunga_articles.json")
 
 def main():
     headers = {
@@ -257,35 +116,31 @@ def main():
         'https://akanyaburunga.wordpress.com/category/inkuru-zigezweho/',
         'https://akanyaburunga.wordpress.com/category/kahise/',
         'https://akanyaburunga.wordpress.com/category/menya-akahise-kawe/',
-        'https://akanyaburunga.wordpress.com/category/uncategorized/',
         'https://akanyaburunga.wordpress.com/category/utugenegene/',
         'https://akanyaburunga.wordpress.com/category/yaga-akaranga/'
     ]
     
-    all_articles = []
-    existing_urls = set()
-    
-    # Load existing progress
-    if os.path.exists('Articles.json'):
-        all_articles = load_progress()
-        existing_urls = {article['url'] for article in all_articles}
+    # Dictionary to store all categories and their articles
+    all_categories = {}
     
     # Scrape each category
     for category_url in categories:
-        print(f"\nProcessing category: {category_url}")
-        category_articles = scrape_category(category_url, headers)
+        category_name = category_url.split('/')[-2]  # Get category name from URL
+        print(f"\nScraping category: {category_name}")
         
-        # Add only new articles
-        for article in category_articles:
-            if article['url'] not in existing_urls:
-                all_articles.append(article)
-                existing_urls.add(article['url'])
-                save_progress(all_articles)
+        articles = scrape_category(category_url, headers)
+        all_categories[category_name] = {
+            'url': category_url,
+            'articles': articles
+        }
+        
+        # Save progress after each category
+        save_articles(all_categories)
+        
+        # Be polite to the server
+        time.sleep(3)
     
-    print(f"\nTotal articles scraped: {len(all_articles)}")
-    
-    # After scraping is complete, save structured version
-    save_structured_articles(all_articles)
+    print("\nScraping completed!")
 
 if __name__ == "__main__":
     main()
