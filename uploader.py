@@ -91,7 +91,7 @@ def main():
     # MODIFICATION À FAIRE :
     # Remplace "chemin d'acces vers ama article yawe" par le chemin du dossier où se trouvent tes fichiers Markdown.
     # Par exemple : Path("articles_markdown") si tes fichiers sont dans un dossier "articles_markdown" à la racine du projet.
-    markdown_directory = Path(".")
+    markdown_directory = Path("articles_markdown")
 
     # Vérification si le répertoire existe
     if not markdown_directory.exists():

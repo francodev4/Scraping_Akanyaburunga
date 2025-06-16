@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import json
 import time
 import os
+import re
 
 def get_article_content(url, headers):
     """Get the full content of an article"""
@@ -100,18 +101,31 @@ def save_articles(categories_data):
         json.dump(categories_data, f, ensure_ascii=False, indent=4)
     print(f"Saved all articles to akanyaburunga_articles.json")
 
+def sanitize_filename(text):
+    """Nettoie le texte pour l'utiliser dans un nom de fichier."""
+    text = text.lower()
+    text = re.sub(r'[^a-z0-9\-_ ]', '', text)
+    text = text.replace(' ', '-')
+    return text
+
 def save_articles_markdown(categories_data):
-    """Save articles to a Markdown file"""
-    with open('akanyaburunga_articles.md', 'w', encoding='utf-8') as f:
-        for category, data in categories_data.items():
-            f.write(f"# Catégorie: {category}\n\n")
-            for article in data.get('articles', []):
-                f.write(f"## {article.get('title', 'Sans titre')}\n")
-                f.write(f"**Date:** {article.get('date', 'Inconnue')}  \n")
-                f.write(f"**URL:** {article.get('url', '')}\n\n")
-                f.write(f"{article.get('content', '').strip()}\n\n")
-                f.write("---\n\n")
-    print(f"Saved all articles to akanyaburunga_articles.md")
+    """Crée un fichier Markdown pour chaque article dans le dossier articles_markdown."""
+    output_dir = "articles_markdown"
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+    for category, data in categories_data.items():
+        cat_slug = sanitize_filename(category)
+        for article in data.get('articles', []):
+            title_slug = sanitize_filename(article.get('title', 'sans-titre'))
+            filename = f"akanyaburunga_{cat_slug}_{title_slug}.md"
+            filepath = os.path.join(output_dir, filename)
+            with open(filepath, 'w', encoding='utf-8') as f:
+                f.write(f"# {article.get('title', 'Sans titre')}\n\n")
+                f.write(f"**Catégorie :** {category}\n\n")
+                f.write(f"**Date :** {article.get('date', 'Inconnue')}  \n")
+                f.write(f"**URL :** {article.get('url', '')}\n\n")
+                f.write(f"{article.get('content', '').strip()}\n")
+            print(f"Fichier généré : {filepath}")
 
 def main():
     headers = {

@@ -1,0 +1,21 @@
+# Inyambo: inka yubahitse cane kw’isi
+
+**Catégorie :** imibano
+
+**Date :** November 29, 2017 2:40 pm  
+**URL :** https://akanyaburunga.wordpress.com/2017/11/29/inyambo-inka-yubahitse-cane-kwisi/
+
+Inyambo ni inka ihagurutse yari yubahitse cane mu Rwanda no mu Burundi bw’aho hambere. Ni inka ifise ubwiza budasanzwe.Iyo nka ifise amahembe maremare, ateze neza cane ku buryo uyiravye usanga iberewe birenze urugero. Ifise mu maso hasenye neza n’akanyabutatu ufatiye ku mahembe yayo. Iba iteze ishinze kandi igoroye. Iyo nka ikomoka kure cane kandi irubashwe hose.
+Ishusho: commons.wikimedia.org
+Ijambo “Inyambo” rirakoreshwa mu kirundi cane. Bararikoresha bariko baravuga ubwoko bw’inka zakunda gutungwa mu mugamba canke iyo bariko baravuga ubwiza bw’ikintu na canecane  ubwiza bw’umukobwa. Musanzwe muzi ko umukobwa w’umurundikazi bamugereranya n’inka. Inyambo rero bivanye n’ubwiza buyigaragarako bagaca barikoresha mu kugereranya umuntu w’ubwiza bwinshi. Bavuze “gushaza manyambo”, bisigura kugenda neza nk’inyambo ugendera ubwiza bwawe.
+Vy’inyamo, ziva ku gitungwa citwa re’em mu giheburayo. Ico gitungwa kivugwa muri Bibiliya, incuro zishika icenda: Mu guharura (23,22) (24,8), Gusubira mu Vyagezwe (33,17), Yobu (39,9-10), Zaburi (22,21) (29,6) (92,11) na Izaya (34,7).
+Izo nka zatanguye kuboneka mu ntara ya Rift Valey kuva muri Nubiya kumanuka gushika ku nkengera za Tanganyika. Zizwi ko zikomoka ku gisokuru cazo citwa “Aurochs”, ikibogo kinini cazimanganye haraciye imyaka irenga ibihumbi umunani.  Bivugwa ko inka zakomotse kuri ico gisogokuru zagumye zimanuka zirisha mu ntara ya Lift Valey ariyo yitwa imbo igera ku nkengera za Tanganyika mu Burundi. Mu Rwanda no mu Burundi, izo nka zitwa inyambo, kuko zarangwa ku nkengera y’uruzi Nili mu kiyaya c’imbo aho insazi Tse-Tse itashobora kuzirya.  Mu bindi bihugu nko mu Buganda, izo nka bazita Ankole. Ahandi naho bazita Watusi kuko zatunzwe n’aborozi b’abatutsi baja baraziragira ku nkengera z’uruzi. Nk’uko vyandikwa n’ishirahamwe mpuzamakungu y’abatunganyambo (WWA), izo nka zahavuye zitwarwa mu budagi n’ibindi bihugu vya Buraya, ziruhira kujanwa no muri Amerika aho zisigaye ari nyinshi (zirenga ibice 80%).
+Zoba ziva mu ntara y’imbo
+Amahembe yazo ni maremare. Ishusho: commons.wikimedia.org
+Bamwe bavuga ko zoba ziva mu ntara y’imbo. Ngo abantu baba mu ntara za Mugamba n’ahandi boba barabonye izonka zisangije uko zisa ziduganwa mu ntara zabo bagaca bazita iryo zina “Inyambo”. I-nya-mbo. Iryo jambo ni izina ry’urunani hagati y’integuza I yongeweko indangakibanza nya n’irindi jambo imbo. Bikumvikana ko izo nka ziva imbo.
+Aba nyene bifashisha irindi zina ry’inka nazo zitwa inyaruguru. Bavuga ko vyoba vyavuye ko ahatari imbo bakunda kuhita ruguru. Izo nka rero zikaba zakomoka ruguru. Bazihushanije rero n’inyambo. Bikumvikana ko izikomoka mu ntara zindi zitwa inyaruguru iz’I mbo nazo zikitwa inyambo. Kandi ubwo bwoko bw’inka buratandukanye biboneka. Inyaruguru ni inka zagutse, zifise igikuriro n’amahembe matoya cane. Zitandukanye n’inyambo. (Ankole)
+Duhereye kuri ico ciyumviro canyuma, abandi bavuga ko atariyo kuko iyo bakuye amahembe yari inyambo igira amahembe maremare, iyo batayayikuye yari inyaruguru aguma ari magufi nyene.
+Inka zubashwe cane
+Mu Burundi no mu Rwanda, inyambo zari inka z’ubwami. Inka zubashwe cane zama zivugirwa amazina bakazifata neza kuko nizo nka nyinshi wasanga umwami atunze. Kubera ubwiza bwazo, ubusho bw’inka bwatungwa I Bwami bwaba ari ubw’inyambo. Inka y’inyambo bafata ko ari igitungwa gihezagiye.  Inyambo ntiyapfa kubangurirwa impfizi iyo ariyo yose. Baraba nziza idoshe bakayiyibangurirako bagaca bayiha n’umutobe kugirango ize ivyare iyo bisa, inyambo nkayo.
+Mu Burundi, ubuzima bwose bwari bushingiye ku nka, kugeza aho hatereye urwimo. Inka yaza imbere y’izindi nayo yari inyambo. Ico bubashe cose bacitirira ibiraba inka. Inda y’umwami bayita “igisabo”, umugeni nawe bakamwita “inka”, inka y’amaguru abiri. Imbere y’umuzo w’abazungu, umuntu atunze inka niwe yari umutunzi wa mbere.
+Mu bihe vya none, izo nka zirateye igomwe iyo uzibonye. Muri Amerika n’I Buruaya, inka Watusi iratonye cane kuko bariko barazigwiza cane. Mu gihugu c’Urwanda hoho, Inyambo iri mu bintu vyinjiza amafaranga menshi mu bukerarugendo.

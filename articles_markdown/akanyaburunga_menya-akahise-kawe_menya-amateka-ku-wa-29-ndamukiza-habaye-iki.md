@@ -1,0 +1,14 @@
+# Menya amateka: ku wa 29 Ndamukiza habaye iki ?
+
+**Catégorie :** menya-akahise-kawe
+
+**Date :** April 29, 2024 12:05 am  
+**URL :** https://akanyaburunga.wordpress.com/2024/04/29/menya-amateka-ku-wa-29-ndamukiza-habaye-iki/
+
+Mu Burundi, kw’igenekerezo rya 29 Ndamukiza hagiye haraba ibitandukanye, haba muri poritike, imibano, amabwirizwa, umutekano n’ibindi uko imyaka yagiye iragenda. Tubigarukeko. Twizera ko hari abo bishobora kugirira akamaro mu bakunzi b’amateka y’igihugu cacu, eka mbere n’abakunzi b’amakuru atandukanye. Mu mateka amwe amwe, twisunga ivyagiye biraja ahabona ku mbuga ngurukanabumenyi canke ku bimenyeshamakuru.
+Muri poritike n’imigenderanire :
+Ubutunzi:
+Uburimyi n’ubworozi:
+Ibidukikije n’Umutekano :
+Ukaba uzi ikindi gikomeye cabaye kuri irigenekerezo, wobitumenyesha kuri akanyaburunga@gmail.com canke kuri 69 157 241. Turakengurutse.
+Kuko kubaho ata mateka canke ata muco ukugenga uba usa n’icombo c’icigenze gishobora gukorerwa n’uwuhita wese.

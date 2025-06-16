@@ -1,0 +1,19 @@
+# “Naranezerewe nsangiye umuganuro n’abandi mu 2017”
+
+**Catégorie :** kahise
+
+**Date :** January 15, 2018 12:23 pm  
+**URL :** https://akanyaburunga.wordpress.com/2018/01/15/naranezerewe-nsangiye-umuganuro-nabandi-mu-2017/
+
+Inyuma y’imyaka mirongo 51 Umuganuro udahimbazwa mu Burundi, abarundi bari mu gihugu c’Urwanda n’abari bavuye mu yindi mihingo barahimbaje uwo munsi w’akaroruhore mu mateka y’Uburundi. Abantu bari bahashitse na canecane urwaruka, baratamariwe. Umvira uko Mutore Evode abituyagira.
+Ishusho: commons.wikimedia.org
+N’uwari kunkubita, sinari kwemera ko vyoshika. Umuganuro mu mwaka wa 2017? Nkibonera jewe nyene amaso mu yandi uko umwami yaganura? Vyaransiga. Uwabimbwiye ubwa mbere namufashe nk’umurosi. Nabifashe nko gutebura. Gusa naguma ndamusokoroza uko bimeze kuko nari nzi ko ari umuntu adakunze guhuguza. Yarambwiye umunsi bizoberako, n’ababiteguye. Nagumye ndaba ikirangaminsi ngo uwo munsi udasanzwe kuri jewe ntundengane.
+Kw’igenekerezo rya 5 Kigarama 2017, sije nabonye burakeye. Inyuma y’agasabisho ko mu gatondo, igikorwa cambere nahereyeko: nafashe iterefoni mpamagara wa mugenzi wanje yantumira muri uwo munsi, kugire numve ko atampenze. Yarambwiye ko umunsi w’umuganuro washitse. Naravyutse ndiyoga ndambara neza imararubanza nyene.  Ni uko nca nterera mu kayira kaja ku kigo ca Maison Shalom kiri mu karere ka Kicukiro mu gisagara ca Kigali.
+Icanyunguruje wamengo ntikiva aho kiri. Sije nabonye ndashitseyo. Nkihashika nabonye isinzi ry’abantu bamaze kuhashika. N’abandi baguma bagwa nk’imvura. Havuyemwo abari babiteguye baguma baca aha baca aha bereka abantu aho bicara, abandi benshi baguma beraguza nkanje. Akaneza n’amakenga nivyo vyaboneka mu maso y’umwe wese. Ntawari yiteze uwo munsi!
+Umuganuro  nyezina
+Hafi isaha ya gatanu y’umusase, umurisho w’ingoma waravumereye, uvuga ko ibirori bitanguye, umwami atanguye umuganuro. Nk’ikiringo c’isaha n’igice, abatimbo banonotse bidasanzwe barivuna barivunagura, imitima y’abari aho iratwenga, iraremerana. Baragaragaje ubushobozi budasanzwe, bahiga imbere yacu natwe twatamariwe. Vyari ibirori koko.  Hakurikiye ikiyago c’abato n’abakuze bibukanya ico ari co umuganuro. Baravuze ko “ Umuganuro wari ufise insiguro ikomeye, insiguro y’ubumwe n’akaranga biri mu bintu abakoroni bakuyeho kugira badutandukanye. Hari vyinshi ntari nzi nk’ukuntu umunsi w’umuganuro abarundi bose batagerezwa kuzimya umucanwa bakaja kurahura uw’I bwami. Bagenda barahanahana gushika uburundi bwoe bushikiriwe. Ikindi ntari nzi ni uko umwami yategerezwa kugera imbavu n’umukobwa w’isugi kuri uwo munsi. Ikindi ntari nzi ni uko Inamujandi yari yaragerageje kuwugarukana ariko araneshwa n’abakoroni.
+Igituma umuganuro wari ukwiye guhimbazwa mu 2017
+Umuganuro wari ufise insiguro ihambaye cane mu kwunga imiryargo. Nk’uko vyavuzwe aho, Ni no muri iyo ntumbero wahimbajwe inyuma y’imyaka myinshi y’ukutumvika hagati y’abonse rimwe kugira ngo turengere ibidutanya kanatsinda ico dupfa gisumba ico dupfana. Nico catumye abarundi baba mu buhungiro mu gihugu c’Urwanda eka n’abavuye mu mahanga ya kure baza guhimbaza uwo munsi.
+Urwaruka rwari aho rwari rwajumarariwe. Ivyo twariko turabona kari agatangaza. Bati akaryoshe ntigahera mw’itama. Ntitwashaka ko bihera. Mu gusozera twagiye tubona batwegeranya. Batubwira ko hageze igihe co kurya ”umwaka”; bazana imfungurwa za kavukire. Tubona batuzaniye ibigori (ibitetse, ivyokeje, n’intete) ibiharage, imyungu amateke n’ibindi… Bahurako ibinyobwa bihuza abavukanyi, impeke ku bakuze n’amata ku bana. Aho umurisho waguma uhurira, imvyino n’intambo vy’ikirundi ari akorore uhore. Abari aho bose akanyamuneza kari kose.
+Twariye twanyoye ibirori birangiye, uwari yagizwe umwami hambavu y’umwamikazi, yatanze isango mu mwaka uza muri kigarama nyene ko bazosubira bagakoranira hamwe mu kubungabunga iragi ry’abasokuru.
+Mutore Evode

@@ -1,0 +1,14 @@
+# Dusome: “Aho hambere hahise twarashaza”
+
+**Catégorie :** amayagwa
+
+**Date :** June 29, 2022 8:59 am  
+**URL :** https://akanyaburunga.wordpress.com/2022/06/29/dusome-aho-hambere-hahise-twarashaza/
+
+Aka gasomwa abize amashure aho hambere barakibuka. Ariko abarutse ubu ntibakikibuka kandi utuntu nk’utu twari duhimbaye kuko ni two twatwigisha ikirundi.  Some musoserwe.
+Aho hambere hahise twarashaza
+Bayaga ntiyamenye ingene bashitse kwa sekuru, kuko ico kiyago cari camuryoheye cane. Asanga bavyarawe mu  rugo, bararamukanya. Yitera mu nzu kwa sekuru, inakuru aramuramutsa, aramuzimana. Bayaga yari yatamariwe n’ivyo inakuru yambaye. Yatevye ati : « Mbe nyoku, nk’ivyo vyose wabikuye he » ? Inakuru aratwenga ati: «Erega mwananje, na none agaciwe karuma, hambere aho twarashaza. Ibi ubona mw’izosi, ni ubusaro n’ibirezi. Hari n’ibindi bininibinini abashingantahe bashazamwo, ari vyo bihete. Ibihete wumva, aho vyava ntawuhazi neza. Ariko bamwe bavuga ko vyaseswa n’uruzi, bikaza bisa n’imiruka y’ibifyera, bikangana n’ibakure, bikitwa ibirungu. Abandi bavuga ko vyava mubinono vy’inzovu. Ibihete vaboneka bigoranye rwose. Ico vyavamwo cose vyagurwa vyinshi cane. Igihete gisenye neza carazimba, cagurwa inka nyishi kikambarwa n’abaganwa n’abatunzi. Bariko barasatura ibihete bongera babikarisha, haja haracagukako ibisate. Ivyo bisate ni vyo bakarishamwo ibirezi nk’ibi nambaye. Ibirezi rero ni nk’ibihete bitoyi. Barabitungira ku murya canke ku muhivu, abakenyezi bakavyambara mw’izosi, hari uwambara bibiri, hari uwambara bibiri, hari uwambara bitatu, bine canke na bitanu.Na vyonyene vyagugwa inka. Umugabo yavyambika umugore, yaba yifise.
+Bayaga abwira inakuru ati: «None ko ivy’ibirezi n’ivy,ibihete ndavyumvise,ibi vyo wambaye ku maboko ni ibiki» ?
+-Aha kumaboko nambaye imiringa n’inyerere, no ku maguru ziruzuye. Imiringa yava mu butare bakura mu kuzimu. Abacuzi ni bo bayigurisha. Yambarwa n’abagabo n’abagore. Uko yarushanya ubwoko, niko yarushanya n’igiciro. Ariko imiringa y’abagabo ntiyangana n’iy’abagore. Abagabo bambara imiringa mininiminini ifise amazuru. Iyo rero bayita imitsibo, ikambarwa n’abatunzi kuko umwe washobora kugurwa inka. Abakenyezi na bo bambara iyihwanije, itagira amazuru, kenshi bayibambikira mu ruganda. Imiringa ntiyasa yose, hari iy’imijumbu, hakaba n’iy’iyimyakaka yasa n’umuhondo cane, ikaba myiza rwose.
+Bayaga aca abaza inakuru ati: «None inyerere na zo zakorwa n’abacuzi»?
+-Ego, na zo nyene ni bo bazizinga, bazikura mu butare. Mukuzizinga, bakoresha ivyuma vyasigaye mu gucura imiringa. Barabikwega bikavamwo urutahe rurerure rwirabura canke rusa n’umujumbu. Urwo ni rwo bazingira ku bushenza bw’inka, bw’impene canke ku bugwegwe, rukaba urunyerere. Izo nyerere zasa n’intahe kandi zambarwa na bose, abagore n’abagabo. Zashorwa n’abayangayanga. Izizinze neza bakazigura inka, izindi na zo zikagurwa indya. Inakuru agejeje aho, Bayaga amubwira ko agiye gukina na bavyarawe.
