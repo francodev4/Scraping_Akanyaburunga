@@ -100,6 +100,19 @@ def save_articles(categories_data):
         json.dump(categories_data, f, ensure_ascii=False, indent=4)
     print(f"Saved all articles to akanyaburunga_articles.json")
 
+def save_articles_markdown(categories_data):
+    """Save articles to a Markdown file"""
+    with open('akanyaburunga_articles.md', 'w', encoding='utf-8') as f:
+        for category, data in categories_data.items():
+            f.write(f"# Catégorie: {category}\n\n")
+            for article in data.get('articles', []):
+                f.write(f"## {article.get('title', 'Sans titre')}\n")
+                f.write(f"**Date:** {article.get('date', 'Inconnue')}  \n")
+                f.write(f"**URL:** {article.get('url', '')}\n\n")
+                f.write(f"{article.get('content', '').strip()}\n\n")
+                f.write("---\n\n")
+    print(f"Saved all articles to akanyaburunga_articles.md")
+
 def main():
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
@@ -136,6 +149,7 @@ def main():
         
         # Save progress after each category
         save_articles(all_categories)
+        save_articles_markdown(all_categories)
         
         # Be polite to the server
         time.sleep(3)
